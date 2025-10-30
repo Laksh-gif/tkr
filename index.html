@@ -16,8 +16,17 @@
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       background-color: #000000;
+      background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 50px 50px;
+      background-position: -1px -1px;
       color: #ffffff;
       line-height: 1.6;
       overflow-x: hidden;
@@ -192,6 +201,8 @@
       transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       position: relative;
       overflow: hidden;
+      z-index: 2;
+      isolation: isolate;
     }
 
     .hero button::before {
@@ -213,6 +224,7 @@
     .hero button:hover {
       color: #ffffff;
       background: transparent;
+      transform: scale(1.05);
     }
 
     /* ===== PRODUCT SECTION ===== */
@@ -220,6 +232,19 @@
       padding: 100px 40px;
       max-width: 1400px;
       margin: auto;
+      position: relative;
+    }
+
+    section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1px;
+      height: 100px;
+      background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.1), transparent);
+      opacity: 0.5;
     }
 
     .section-title {
@@ -232,6 +257,7 @@
       position: relative;
       display: inline-block;
       width: 100%;
+      z-index: 10;
     }
 
     .section-title::after {
@@ -243,12 +269,126 @@
       width: 80px;
       height: 3px;
       background: #ffffff;
+      animation: expandLine 1s ease-out forwards;
+    }
+
+    @keyframes expandLine {
+      from {
+        width: 0;
+      }
+      to {
+        width: 80px;
+      }
+    }
+
+    .section-title.visible::after {
+      animation: expandLine 1s ease-out forwards;
     }
 
     .products {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
       gap: 40px;
+    }
+
+    /* ===== PRODUCT SLIDER ===== */
+    .product-slider-container {
+      position: relative;
+      overflow: hidden;
+      padding: 0 60px;
+      display: none;
+    }
+
+    .product-slider {
+      display: flex;
+      gap: 20px;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      padding: 20px 0;
+      scroll-snap-type: x mandatory;
+    }
+
+    .product-slider::-webkit-scrollbar {
+      display: none;
+    }
+
+    .product-slider .product-card {
+      min-width: 280px;
+      max-width: 280px;
+      flex-shrink: 0;
+      scroll-snap-align: start;
+    }
+
+    .product-slider .product-image {
+      height: 350px;
+    }
+
+    .slider-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 45px;
+      height: 45px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+      font-size: 1.2rem;
+      font-weight: 700;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+      user-select: none;
+    }
+
+    .slider-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.5);
+    }
+
+    .slider-btn:active {
+      transform: translateY(-50%) scale(0.95);
+    }
+
+    .slider-btn.prev {
+      left: 10px;
+    }
+
+    .slider-btn.next {
+      right: 10px;
+    }
+
+    @media (hover: none) and (pointer: coarse) {
+      .slider-btn {
+        opacity: 0.7;
+      }
+    }
+
+    .slider-dots {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 30px;
+    }
+
+    .slider-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .slider-dot.active {
+      background: #ffffff;
+      width: 24px;
+      border-radius: 4px;
     }
 
     .product-card {
@@ -260,6 +400,8 @@
       overflow: hidden;
       position: relative;
       cursor: pointer;
+      z-index: 1;
+      isolation: isolate;
     }
 
     .product-card::before {
@@ -305,7 +447,7 @@
     .product-info {
       padding: 25px;
       position: relative;
-      z-index: 2;
+      z-index: 3;
     }
 
     .product-card h3 {
@@ -344,11 +486,15 @@
       letter-spacing: 1.5px;
       text-transform: uppercase;
       transition: all 0.3s ease;
+      position: relative;
+      z-index: 2;
     }
 
     .btn:hover {
       background: #ffffff;
       color: #000000;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
     }
 
     /* ===== ABOUT SECTION ===== */
@@ -361,6 +507,26 @@
       line-height: 1.9;
       max-width: 900px;
       margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .about::before {
+      content: '';
+      position: absolute;
+      top: -1px;
+      left: -1px;
+      right: -1px;
+      bottom: -1px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 50%, rgba(255,255,255,0.1) 100%);
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .about:hover::before {
+      opacity: 1;
     }
 
     .about p {
@@ -386,11 +552,58 @@
       background: #000000;
       color: rgba(255, 255, 255, 0.5);
       text-align: center;
-      padding: 40px;
+      padding: 60px 40px 40px;
       font-size: 0.9rem;
       border-top: 1px solid rgba(255, 255, 255, 0.1);
       letter-spacing: 0.5px;
       font-weight: 400;
+      position: relative;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-logo {
+      font-size: 1.5rem;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #ffffff 0%, #666666 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin: 30px 0;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.6);
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 500;
+    }
+
+    .footer-links a:hover {
+      color: #ffffff;
+      transform: translateY(-2px);
+    }
+
+    .footer-divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+      margin: 30px 0 20px;
     }
 
     /* ===== LOADING SCREEN ===== */
@@ -669,8 +882,38 @@
       }
       
       .products {
-        grid-template-columns: 1fr;
-        gap: 30px;
+        display: none;
+      }
+
+      .product-slider-container {
+        display: block;
+      }
+
+      .product-slider-container {
+        padding: 0 20px;
+      }
+
+      .slider-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+      }
+
+      .slider-btn.prev {
+        left: 5px;
+      }
+
+      .slider-btn.next {
+        right: 5px;
+      }
+
+      .product-slider .product-card {
+        min-width: 260px;
+        max-width: 260px;
+      }
+
+      .product-slider .product-image {
+        height: 320px;
       }
       
       .about {
@@ -679,6 +922,23 @@
 
       .loader-logo {
         font-size: 2rem;
+      }
+
+      .features {
+        grid-template-columns: 1fr;
+        padding: 60px 20px;
+      }
+
+      .back-to-top {
+        bottom: 20px;
+        right: 20px;
+        width: 45px;
+        height: 45px;
+      }
+
+      .footer-links {
+        flex-direction: column;
+        gap: 15px;
       }
     }
 
@@ -695,6 +955,154 @@
       .section-title {
         font-size: 1.6rem;
       }
+
+      .product-slider .product-card {
+        min-width: 240px;
+        max-width: 240px;
+      }
+
+      .product-slider .product-image {
+        height: 300px;
+      }
+
+      .product-info {
+        padding: 20px;
+      }
+
+      .product-card h3 {
+        font-size: 1.1rem;
+      }
+
+      .product-card p {
+        font-size: 0.9rem;
+      }
+
+      .price {
+        font-size: 1.2rem;
+      }
+
+      .btn {
+        padding: 10px 25px;
+        font-size: 0.8rem;
+      }
+
+      .slider-btn {
+        width: 35px;
+        height: 35px;
+        font-size: 0.9rem;
+      }
+
+      .slider-btn.prev {
+        left: 2px;
+      }
+
+      .slider-btn.next {
+        right: 2px;
+      }
+
+      .product-slider-container {
+        padding: 0 10px;
+      }
+    }
+
+    /* ===== FEATURES SECTION ===== */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 40px;
+      margin-top: 80px;
+      padding: 80px 40px;
+      background: linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.02) 50%, transparent 100%);
+    }
+
+    .feature-item {
+      text-align: center;
+      padding: 40px 20px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      transition: all 0.5s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+      transition: left 0.8s ease;
+    }
+
+    .feature-item:hover::before {
+      left: 100%;
+    }
+
+    .feature-item:hover {
+      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-5px);
+    }
+
+    .feature-icon {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      font-weight: 900;
+    }
+
+    .feature-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      letter-spacing: 0.5px;
+    }
+
+    .feature-desc {
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.6);
+      line-height: 1.6;
+    }
+
+    /* ===== DIVIDER ===== */
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+      margin: 60px 0;
+    }
+
+    /* ===== BACK TO TOP BUTTON ===== */
+    .back-to-top {
+      position: fixed;
+      bottom: 40px;
+      right: 40px;
+      width: 50px;
+      height: 50px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      z-index: 100;
+      font-size: 1.2rem;
+      font-weight: 700;
+      backdrop-filter: blur(10px);
+    }
+
+    .back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .back-to-top:hover {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.5);
+      transform: translateY(-5px);
     }
   </style>
 </head>
@@ -714,6 +1122,9 @@
   <!-- ===== CUSTOM CURSOR ===== -->
   <div class="cursor"></div>
   <div class="cursor-follower"></div>
+
+  <!-- ===== BACK TO TOP BUTTON ===== -->
+  <div class="back-to-top" onclick="scrollToTop()">↑</div>
 
   <!-- ===== NAVBAR ===== -->
   <header>
@@ -741,6 +1152,8 @@
   <!-- ===== SHOP SECTION ===== -->
   <section id="shop">
     <h2 class="section-title fade-in">Shop Our Collection</h2>
+    
+    <!-- Desktop Grid View -->
     <div class="products">
       <div class="product-card fade-in">
         <div class="product-image">
@@ -776,7 +1189,94 @@
         </div>
       </div>
     </div>
+
+    <!-- Mobile Slider View -->
+    <div class="product-slider-container">
+      <div class="slider-btn prev" onclick="slideProducts(-1)">‹</div>
+      <div class="slider-btn next" onclick="slideProducts(1)">›</div>
+      
+      <div class="product-slider" id="productSlider">
+        <div class="product-card">
+          <div class="product-image">
+            <img src="https://images.unsplash.com/photo-1618354691267-cf2e0f0b9b11?auto=format&fit=crop&w=600&q=80" alt="Vintage Jacket">
+          </div>
+          <div class="product-info">
+            <h3>Vintage Leather Jacket</h3>
+            <p>Perfectly aged, premium feel, size M</p>
+            <p class="price">₹1,999</p>
+            <a href="#" class="btn">Buy Now</a>
+          </div>
+        </div>
+        <div class="product-card">
+          <div class="product-image">
+            <img src="https://images.unsplash.com/photo-1593032465171-8e9a9293b6f7?auto=format&fit=crop&w=600&q=80" alt="Sweater">
+          </div>
+          <div class="product-info">
+            <h3>Retro Wool Sweater</h3>
+            <p>Warm & cozy, made for winters</p>
+            <p class="price">₹1,299</p>
+            <a href="#" class="btn">Buy Now</a>
+          </div>
+        </div>
+        <div class="product-card">
+          <div class="product-image">
+            <img src="https://images.unsplash.com/photo-1604176354204-926c2d3acbb8?auto=format&fit=crop&w=600&q=80" alt="Denim Jacket">
+          </div>
+          <div class="product-info">
+            <h3>Classic Denim Jacket</h3>
+            <p>All-time favorite, unisex fit</p>
+            <p class="price">₹1,499</p>
+            <a href="#" class="btn">Buy Now</a>
+          </div>
+        </div>
+        <div class="product-card">
+          <div class="product-image">
+            <img src="https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=600&q=80" alt="Vintage Coat">
+          </div>
+          <div class="product-info">
+            <h3>Vintage Trench Coat</h3>
+            <p>Classic style, timeless elegance</p>
+            <p class="price">₹2,499</p>
+            <a href="#" class="btn">Buy Now</a>
+          </div>
+        </div>
+        <div class="product-card">
+          <div class="product-image">
+            <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=600&q=80" alt="Hoodie">
+          </div>
+          <div class="product-info">
+            <h3>Retro Hoodie</h3>
+            <p>Comfortable & stylish streetwear</p>
+            <p class="price">₹1,799</p>
+            <a href="#" class="btn">Buy Now</a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="slider-dots" id="sliderDots"></div>
+    </div>
+
+    <!-- ===== FEATURES SECTION ===== -->
+    <div class="features">
+      <div class="feature-item fade-in">
+        <div class="feature-icon">✓</div>
+        <h3 class="feature-title">100% Authentic</h3>
+        <p class="feature-desc">Every piece is handpicked and verified for quality</p>
+      </div>
+      <div class="feature-item fade-in">
+        <div class="feature-icon">♻</div>
+        <h3 class="feature-title">Sustainable</h3>
+        <p class="feature-desc">Eco-friendly fashion that reduces waste</p>
+      </div>
+      <div class="feature-item fade-in">
+        <div class="feature-icon">★</div>
+        <h3 class="feature-title">Unique Finds</h3>
+        <p class="feature-desc">One-of-a-kind vintage pieces you won't find elsewhere</p>
+      </div>
+    </div>
   </section>
+
+  <div class="divider"></div>
 
   <!-- ===== ABOUT ===== -->
   <section id="about">
@@ -796,7 +1296,17 @@
 
   <!-- ===== FOOTER ===== -->
   <footer>
-    © 2025 Thrift Kashmirr | Sustainable Vintage Fashion
+    <div class="footer-content">
+      <div class="footer-logo">Thrift Kashmirr</div>
+      <div class="footer-links">
+        <a href="#shop">Shop</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+        <a href="https://instagram.com/thrift_kashmirr" target="_blank">Instagram</a>
+      </div>
+      <div class="footer-divider"></div>
+      <p>© 2025 Thrift Kashmirr | Sustainable Vintage Fashion</p>
+    </div>
   </footer>
 
   <script>
@@ -852,6 +1362,8 @@
 
     // ===== NAVBAR SCROLL EFFECT =====
     let lastScroll = 0;
+    const backToTop = document.querySelector('.back-to-top');
+    
     window.addEventListener('scroll', function() {
       const header = document.querySelector('header');
       const currentScroll = window.pageYOffset;
@@ -863,9 +1375,24 @@
         header.style.background = 'rgba(0, 0, 0, 0.95)';
         header.style.boxShadow = 'none';
       }
+
+      // Back to top button visibility
+      if (currentScroll > 500) {
+        backToTop.classList.add('visible');
+      } else {
+        backToTop.classList.remove('visible');
+      }
       
       lastScroll = currentScroll;
     });
+
+    // ===== SCROLL TO TOP FUNCTION =====
+    function scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
 
     // ===== SMOOTH REVEAL FOR PRODUCT IMAGES =====
     document.querySelectorAll('.product-card').forEach(card => {
@@ -957,6 +1484,104 @@
           clearInterval(typeWriter);
         }
       }, 50);
+    }
+
+    // ===== PRODUCT SLIDER =====
+    const slider = document.getElementById('productSlider');
+    const dotsContainer = document.getElementById('sliderDots');
+    let currentSlide = 0;
+    let totalSlides = 0;
+
+    if (slider) {
+      const cards = slider.querySelectorAll('.product-card');
+      totalSlides = cards.length;
+
+      // Create dots
+      for (let i = 0; i < totalSlides; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'slider-dot';
+        if (i === 0) dot.classList.add('active');
+        dot.onclick = () => goToSlide(i);
+        dotsContainer.appendChild(dot);
+      }
+
+      // Update dots on scroll
+      slider.addEventListener('scroll', function() {
+        const scrollLeft = slider.scrollLeft;
+        const cardWidth = cards[0].offsetWidth + 20; // width + gap
+        currentSlide = Math.round(scrollLeft / cardWidth);
+        updateDots();
+      });
+
+      // Touch swipe support
+      let touchStartX = 0;
+      let touchEndX = 0;
+
+      slider.addEventListener('touchstart', function(e) {
+        touchStartX = e.changedTouches[0].screenX;
+      });
+
+      slider.addEventListener('touchend', function(e) {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+      });
+
+      function handleSwipe() {
+        if (touchEndX < touchStartX - 50) {
+          slideProducts(1);
+        }
+        if (touchEndX > touchStartX + 50) {
+          slideProducts(-1);
+        }
+      }
+    }
+
+    function slideProducts(direction) {
+      if (!slider) return;
+      
+      const cards = slider.querySelectorAll('.product-card');
+      const cardWidth = cards[0].offsetWidth + 20; // width + gap
+      
+      currentSlide += direction;
+      
+      if (currentSlide < 0) {
+        currentSlide = 0;
+      } else if (currentSlide >= totalSlides) {
+        currentSlide = totalSlides - 1;
+      }
+      
+      slider.scrollTo({
+        left: currentSlide * cardWidth,
+        behavior: 'smooth'
+      });
+      
+      updateDots();
+    }
+
+    function goToSlide(index) {
+      if (!slider) return;
+      
+      const cards = slider.querySelectorAll('.product-card');
+      const cardWidth = cards[0].offsetWidth + 20;
+      
+      currentSlide = index;
+      slider.scrollTo({
+        left: currentSlide * cardWidth,
+        behavior: 'smooth'
+      });
+      
+      updateDots();
+    }
+
+    function updateDots() {
+      const dots = document.querySelectorAll('.slider-dot');
+      dots.forEach((dot, index) => {
+        if (index === currentSlide) {
+          dot.classList.add('active');
+        } else {
+          dot.classList.remove('active');
+        }
+      });
     }
   </script>
 
