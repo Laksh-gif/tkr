@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thrift Kashmirr | Vintage & Sustainable Fashion</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    /* ===== GLOBAL STYLES ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    body {
+      background-color: #000000;
+      color: #ffffff;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    img {
+      width: 100%;
+      border-radius: 0;
+      filter: grayscale(100%) contrast(1.1);
+      transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* ===== NAVBAR ===== */
+    header {
+      background: rgba(0, 0, 0, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      transition: all 0.3s ease;
+    }
+
+    .navbar {
+      max-width: 1400px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 40px;
+    }
+
+    .logo {
+      font-size: 1.4rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #ffffff 0%, #a0a0a0 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 40px;
+    }
+
+    nav ul li a {
+      color: #ffffff;
+      font-weight: 500;
+      font-size: 0.95rem;
+      letter-spacing: 0.5px;
+      position: relative;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+    }
+
+    nav ul li a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #ffffff;
+      transition: width 0.3s ease;
+    }
+
+    nav ul li a:hover::after {
+      width: 100%;
+    }
+
+    nav ul li a:hover {
+      color: #ffffff;
+    }
+
+    /* ===== HERO SECTION ===== */
+    .hero {
+      background: url('https://images.unsplash.com/photo-1520962918287-7448c2878f65?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+      height: 95vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.65) 100%);
+      z-index: 1;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: 
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 2px,
+          rgba(255,255,255,0.02) 2px,
+          rgba(255,255,255,0.02) 4px
+        );
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 900px;
+      padding: 0 20px;
+      animation: fadeInUp 1s ease-out;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero h1 {
+      font-size: 5rem;
+      margin-bottom: 20px;
+      font-weight: 900;
+      letter-spacing: -2px;
+      line-height: 1.1;
+      text-transform: uppercase;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 35px;
+      font-weight: 300;
+      letter-spacing: 0.5px;
+      opacity: 0.9;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero button {
+      padding: 16px 50px;
+      background: #ffffff;
+      color: #000000;
+      border: 2px solid #ffffff;
+      border-radius: 0;
+      cursor: pointer;
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: #000000;
+      transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: -1;
+    }
+
+    .hero button:hover::before {
+      left: 0;
+    }
+
+    .hero button:hover {
+      color: #ffffff;
+      background: transparent;
+    }
+
+    /* ===== PRODUCT SECTION ===== */
+    section {
+      padding: 100px 40px;
+      max-width: 1400px;
+      margin: auto;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 70px;
+      font-size: 3rem;
+      font-weight: 900;
+      letter-spacing: -1px;
+      text-transform: uppercase;
+      position: relative;
+      display: inline-block;
+      width: 100%;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background: #ffffff;
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 40px;
+    }
+
+    .product-card {
+      background: #0a0a0a;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 0;
+      border-radius: 0;
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .product-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, transparent 100%);
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .product-card:hover::before {
+      opacity: 1;
+    }
+
+    .product-card:hover {
+      transform: translateY(-10px);
+      border-color: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+    }
+
+    .product-card:hover img {
+      filter: grayscale(0%) contrast(1.1);
+      transform: scale(1.05);
+    }
+
+    .product-image {
+      overflow: hidden;
+      height: 400px;
+      background: #000;
+    }
+
+    .product-image img {
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .product-info {
+      padding: 25px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .product-card h3 {
+      margin-top: 0;
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+    }
+
+    .product-card p {
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 0.95rem;
+      font-weight: 400;
+      margin-bottom: 15px;
+    }
+
+    .price {
+      margin-top: 12px;
+      font-weight: 800;
+      color: #ffffff;
+      font-size: 1.4rem;
+      letter-spacing: -0.5px;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 12px 30px;
+      background: transparent;
+      color: #fff;
+      border: 2px solid #ffffff;
+      border-radius: 0;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+      background: #ffffff;
+      color: #000000;
+    }
+
+    /* ===== ABOUT SECTION ===== */
+    .about {
+      background: #0a0a0a;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 0;
+      padding: 60px;
+      text-align: center;
+      line-height: 1.9;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .about p {
+      font-size: 1.15rem;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.8);
+      letter-spacing: 0.3px;
+    }
+
+    .about a {
+      color: #ffffff;
+      font-weight: 600;
+      border-bottom: 1px solid #ffffff;
+      transition: opacity 0.3s ease;
+    }
+
+    .about a:hover {
+      opacity: 0.7;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: #000000;
+      color: rgba(255, 255, 255, 0.5);
+      text-align: center;
+      padding: 40px;
+      font-size: 0.9rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      letter-spacing: 0.5px;
+      font-weight: 400;
+    }
+
+    /* ===== LOADING SCREEN ===== */
+    .loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: #000000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+
+    .loader.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .loader-content {
+      text-align: center;
+    }
+
+    .loader-logo {
+      font-size: 2.5rem;
+      font-weight: 900;
+      letter-spacing: -1px;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #ffffff 0%, #666666 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 30px;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0.5;
+      }
+    }
+
+    .loader-bar {
+      width: 200px;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .loader-bar::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: #ffffff;
+      animation: loading 1.5s ease-in-out infinite;
+    }
+
+    @keyframes loading {
+      0% {
+        left: -100%;
+      }
+      100% {
+        left: 100%;
+      }
+    }
+
+    /* ===== SCROLL ANIMATIONS ===== */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(50px);
+      transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .fade-in-left {
+      opacity: 0;
+      transform: translateX(-50px);
+      transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .fade-in-left.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .fade-in-right {
+      opacity: 0;
+      transform: translateX(50px);
+      transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .fade-in-right.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .scale-in {
+      opacity: 0;
+      transform: scale(0.9);
+      transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .scale-in.visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* Stagger animation delays */
+    .product-card:nth-child(1) {
+      transition-delay: 0.1s;
+    }
+
+    .product-card:nth-child(2) {
+      transition-delay: 0.2s;
+    }
+
+    .product-card:nth-child(3) {
+      transition-delay: 0.3s;
+    }
+
+    /* ===== PARALLAX EFFECT ===== */
+    .parallax {
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* ===== SCROLL PROGRESS BAR ===== */
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #ffffff 0%, #666666 100%);
+      z-index: 101;
+      transition: width 0.1s ease;
+    }
+
+    /* ===== CUSTOM CURSOR ===== */
+    body {
+      cursor: none;
+    }
+
+    .cursor {
+      position: fixed;
+      width: 20px;
+      height: 20px;
+      border: 2px solid rgba(255, 255, 255, 0.5);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transition: all 0.15s ease;
+      transform: translate(-50%, -50%);
+    }
+
+    .cursor-follower {
+      position: fixed;
+      width: 8px;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9997;
+      transition: all 0.1s ease;
+      transform: translate(-50%, -50%);
+    }
+
+    .cursor.active {
+      width: 40px;
+      height: 40px;
+      border-color: rgba(255, 255, 255, 0.8);
+    }
+
+    a, button, .product-card {
+      cursor: none;
+    }
+
+    /* ===== ENHANCED BUTTON EFFECTS ===== */
+    .btn {
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .btn::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+      z-index: -1;
+    }
+
+    .btn:hover::after {
+      width: 300px;
+      height: 300px;
+    }
+
+    /* ===== IMAGE OVERLAY EFFECT ===== */
+    .product-image::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(0,0,0,0.3) 0%, transparent 100%);
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      z-index: 1;
+    }
+
+    .product-card:hover .product-image::before {
+      opacity: 1;
+    }
+
+    .product-image {
+      position: relative;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media(max-width: 768px) {
+      body {
+        cursor: auto;
+      }
+
+      .cursor, .cursor-follower {
+        display: none;
+      }
+
+      a, button, .product-card {
+        cursor: pointer;
+      }
+
+      .hero h1 {
+        font-size: 3rem;
+        letter-spacing: -1px;
+      }
+      
+      .hero p {
+        font-size: 1rem;
+      }
+      
+      nav ul {
+        display: none;
+      }
+      
+      .navbar {
+        padding: 20px;
+      }
+      
+      section {
+        padding: 60px 20px;
+      }
+      
+      .section-title {
+        font-size: 2rem;
+      }
+      
+      .products {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+      
+      .about {
+        padding: 40px 25px;
+      }
+
+      .loader-logo {
+        font-size: 2rem;
+      }
+    }
+
+    @media(max-width: 480px) {
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+      
+      .hero button {
+        padding: 14px 35px;
+        font-size: 0.85rem;
+      }
+
+      .section-title {
+        font-size: 1.6rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== LOADING SCREEN ===== -->
+  <div class="loader">
+    <div class="loader-content">
+      <div class="loader-logo">THRIFT KASHMIRR</div>
+      <div class="loader-bar"></div>
+    </div>
+  </div>
+
+  <!-- ===== SCROLL PROGRESS BAR ===== -->
+  <div class="scroll-progress"></div>
+
+  <!-- ===== CUSTOM CURSOR ===== -->
+  <div class="cursor"></div>
+  <div class="cursor-follower"></div>
+
+  <!-- ===== NAVBAR ===== -->
+  <header>
+    <div class="navbar">
+      <div class="logo">Thrift Kashmirr</div>
+      <nav>
+        <ul>
+          <li><a href="#shop">Shop</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Vintage Finds. Modern Vibes.</h1>
+      <p>Curated thrift treasures from the heart of Kashmir — sustainable, stylish, and one-of-a-kind.</p>
+      <button onclick="scrollToShop()">Shop Now</button>
+    </div>
+  </section>
+
+  <!-- ===== SHOP SECTION ===== -->
+  <section id="shop">
+    <h2 class="section-title fade-in">Shop Our Collection</h2>
+    <div class="products">
+      <div class="product-card fade-in">
+        <div class="product-image">
+          <img src="https://images.unsplash.com/photo-1618354691267-cf2e0f0b9b11?auto=format&fit=crop&w=600&q=80" alt="Vintage Jacket">
+        </div>
+        <div class="product-info">
+          <h3>Vintage Leather Jacket</h3>
+          <p>Perfectly aged, premium feel, size M</p>
+          <p class="price">₹1,999</p>
+          <a href="#" class="btn">Buy Now</a>
+        </div>
+      </div>
+      <div class="product-card fade-in">
+        <div class="product-image">
+          <img src="https://images.unsplash.com/photo-1593032465171-8e9a9293b6f7?auto=format&fit=crop&w=600&q=80" alt="Sweater">
+        </div>
+        <div class="product-info">
+          <h3>Retro Wool Sweater</h3>
+          <p>Warm & cozy, made for winters</p>
+          <p class="price">₹1,299</p>
+          <a href="#" class="btn">Buy Now</a>
+        </div>
+      </div>
+      <div class="product-card fade-in">
+        <div class="product-image">
+          <img src="https://images.unsplash.com/photo-1604176354204-926c2d3acbb8?auto=format&fit=crop&w=600&q=80" alt="Denim Jacket">
+        </div>
+        <div class="product-info">
+          <h3>Classic Denim Jacket</h3>
+          <p>All-time favorite, unisex fit</p>
+          <p class="price">₹1,499</p>
+          <a href="#" class="btn">Buy Now</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ABOUT ===== -->
+  <section id="about">
+    <h2 class="section-title fade-in">About Us</h2>
+    <div class="about scale-in">
+      <p>We’re a small thrift collective based in Kashmir, curating sustainable, handpicked fashion that tells a story. Every item is one-of-a-kind — sourced ethically and styled for the modern generation.</p>
+    </div>
+  </section>
+
+  <!-- ===== CONTACT ===== -->
+  <section id="contact">
+    <h2 class="section-title fade-in">Contact Us</h2>
+    <div class="about scale-in">
+      <p>Have questions or want to collaborate?<br>Reach out at <a href="mailto:hello@thriftkashmirr.com">hello@thriftkashmirr.com</a><br>or DM us on <a href="https://instagram.com/thrift_kashmirr" target="_blank">Instagram</a>.</p>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    © 2025 Thrift Kashmirr | Sustainable Vintage Fashion
+  </footer>
+
+  <script>
+    // ===== LOADING SCREEN =====
+    window.addEventListener('load', function() {
+      setTimeout(function() {
+        document.querySelector('.loader').classList.add('hidden');
+      }, 1500);
+    });
+
+    // ===== SCROLL PROGRESS BAR =====
+    window.addEventListener('scroll', function() {
+      const scrollProgress = document.querySelector('.scroll-progress');
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrollPercentage = (scrollTop / scrollHeight) * 100;
+      scrollProgress.style.width = scrollPercentage + '%';
+    });
+
+    // ===== SCROLL ANIMATIONS =====
+    const observerOptions = {
+      threshold: 0.15,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver(function(entries) {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+
+    // Observe all elements with animation classes
+    document.addEventListener('DOMContentLoaded', function() {
+      const animatedElements = document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right, .scale-in');
+      animatedElements.forEach(el => observer.observe(el));
+    });
+
+    // ===== PARALLAX EFFECT ON HERO =====
+    window.addEventListener('scroll', function() {
+      const scrolled = window.pageYOffset;
+      const hero = document.querySelector('.hero');
+      if (hero) {
+        hero.style.transform = 'translateY(' + (scrolled * 0.5) + 'px)';
+      }
+    });
+
+    // ===== SMOOTH SCROLL TO SHOP =====
+    function scrollToShop() {
+      document.getElementById('shop').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // ===== NAVBAR SCROLL EFFECT =====
+    let lastScroll = 0;
+    window.addEventListener('scroll', function() {
+      const header = document.querySelector('header');
+      const currentScroll = window.pageYOffset;
+      
+      if (currentScroll > 100) {
+        header.style.background = 'rgba(0, 0, 0, 0.98)';
+        header.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.5)';
+      } else {
+        header.style.background = 'rgba(0, 0, 0, 0.95)';
+        header.style.boxShadow = 'none';
+      }
+      
+      lastScroll = currentScroll;
+    });
+
+    // ===== SMOOTH REVEAL FOR PRODUCT IMAGES =====
+    document.querySelectorAll('.product-card').forEach(card => {
+      card.addEventListener('mouseenter', function() {
+        this.style.zIndex = '10';
+      });
+      
+      card.addEventListener('mouseleave', function() {
+        this.style.zIndex = '1';
+      });
+    });
+
+    // ===== CUSTOM CURSOR =====
+    const cursor = document.querySelector('.cursor');
+    const cursorFollower = document.querySelector('.cursor-follower');
+    
+    let mouseX = 0;
+    let mouseY = 0;
+    let followerX = 0;
+    let followerY = 0;
+
+    document.addEventListener('mousemove', function(e) {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      
+      cursor.style.left = mouseX + 'px';
+      cursor.style.top = mouseY + 'px';
+    });
+
+    // Smooth follower animation
+    function animateFollower() {
+      followerX += (mouseX - followerX) * 0.1;
+      followerY += (mouseY - followerY) * 0.1;
+      
+      cursorFollower.style.left = followerX + 'px';
+      cursorFollower.style.top = followerY + 'px';
+      
+      requestAnimationFrame(animateFollower);
+    }
+    animateFollower();
+
+    // Cursor interactions
+    const interactiveElements = document.querySelectorAll('a, button, .product-card');
+    
+    interactiveElements.forEach(el => {
+      el.addEventListener('mouseenter', function() {
+        cursor.classList.add('active');
+      });
+      
+      el.addEventListener('mouseleave', function() {
+        cursor.classList.remove('active');
+      });
+    });
+
+    // ===== ENHANCED PRODUCT CARD TILT EFFECT =====
+    document.querySelectorAll('.product-card').forEach(card => {
+      card.addEventListener('mousemove', function(e) {
+        const rect = this.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        
+        const rotateX = (y - centerY) / 20;
+        const rotateY = (centerX - x) / 20;
+        
+        this.style.transform = `translateY(-10px) perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+      });
+      
+      card.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateY(0) perspective(1000px) rotateX(0) rotateY(0)';
+      });
+    });
+
+    // ===== TEXT REVEAL ANIMATION =====
+    const heroTitle = document.querySelector('.hero h1');
+    if (heroTitle) {
+      const text = heroTitle.textContent;
+      heroTitle.textContent = '';
+      heroTitle.style.opacity = '1';
+      
+      let i = 0;
+      const typeWriter = setInterval(function() {
+        if (i < text.length) {
+          heroTitle.textContent += text.charAt(i);
+          i++;
+        } else {
+          clearInterval(typeWriter);
+        }
+      }, 50);
+    }
+  </script>
+
+</body>
+</html>
